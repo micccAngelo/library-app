@@ -47,8 +47,25 @@ function ListBook() {
     navigate(`/book/${id}`);
   };
 
+  const addToCart = (id) => {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}/perpustakaan/api/v1/cart`,
+      {
+        "user_id": "1",
+    		"book_id": id,
+      }
+    );
+  }
+  
   const handleAddToCartClick = (id) => {
-    
+    addToCart(id)
+    console.log(addToCart(id))
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   const pageNumbersToShow = 5;

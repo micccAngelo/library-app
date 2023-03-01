@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Spinner from 'react-bootstrap/Spinner';
 import '../styles/BookDetail.css';
 
 const BookDetail = ({ match }) => {
@@ -18,7 +19,7 @@ const BookDetail = ({ match }) => {
         console.log(response.data.data)
         setBook(response.data.data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     };
     console.log(id)
@@ -27,7 +28,9 @@ const BookDetail = ({ match }) => {
 
   if(!book){
     return(
-    <p>is loading...</p>
+        <div colSpan="7" className="text-center">
+        <Spinner animation="border" variant="primary" />
+        </div>
     );
   }
 
@@ -44,7 +47,7 @@ const BookDetail = ({ match }) => {
         </Card.Text>
         <div className="buttons">
             <Button className="back" href="/book" variant="primary">Back</Button>
-            <Button className="add" variant="primary">Add To Cart</Button>
+            <Button className="add" href="/cart" variant="primary" disabled={book[0].stok === 0}>Add To Cart</Button>
         </div>
       </Card.Body>
     </Card>
