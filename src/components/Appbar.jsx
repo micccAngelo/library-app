@@ -20,6 +20,7 @@ const Appbar = ({ isLoggedIn, handleLogout }) => {
 
   const handleLogoutConfirm = () => {
     setShowLogoutModal(false);
+    localStorage.removeItem('user_id')
     handleLogout();
   };
 

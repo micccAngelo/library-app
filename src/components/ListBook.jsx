@@ -48,18 +48,18 @@ function ListBook() {
   };
 
   const addToCart = (id) => {
+    const user_id = localStorage.getItem('user_id');
     return axios.post(
       `${process.env.REACT_APP_BASE_URL}/perpustakaan/api/v1/cart`,
       {
-        "user_id": "1",
-    		"book_id": id,
+        "user_id": user_id,
+        "book_id": id,
       }
     );
-  }
+  };
   
   const handleAddToCartClick = (id) => {
     addToCart(id)
-    console.log(addToCart(id))
       .then(response => {
         console.log(response.data);
       })
@@ -99,7 +99,7 @@ function ListBook() {
                 <tr key={book.id}>
                   <td>{(currentPage - 1) * 20 + index + 1}</td>
                   <td>{book.title}</td>
-                  <td><img className='book_image' src={book.image_s}/></td>
+                  <td><img className='book_image' src={book.image_s} alt={book.title}/></td>
                   <td>{book.author}</td>
                   <td>{book.publication_year}</td>
                   <td>{book.stok}</td>

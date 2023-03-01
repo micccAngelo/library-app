@@ -10,8 +10,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleLogin = (userId) => {
-    localStorage.setItem('user_id', userId);
+  const handleLogin = (user_id) => {
+    localStorage.setItem('user_id', user_id);
     setIsLoggedIn(true);
   };
 
@@ -21,8 +21,8 @@ function App() {
   };
 
   useEffect(() => {
-    const userId = localStorage.getItem('user_id');
-    if (userId) {
+    const user_id = localStorage.getItem('user_id');
+    if (user_id) {
       setIsLoggedIn(true);
     }
   }, []);
