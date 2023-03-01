@@ -24,7 +24,6 @@ function LoginForm({ onLogin }) {
       localStorage.setItem('userId', response.data.userId);
       onLogin(response.data.userId);
       setSuccess(true);
-      
 
     } catch (error) {
       console.log(error)

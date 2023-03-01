@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Pagination from 'react-bootstrap/Pagination';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/ListBook.css';
 
 function ListBook() {
@@ -11,6 +13,7 @@ function ListBook() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -40,11 +43,11 @@ function ListBook() {
     setCurrentPage(pageNumber);
   };
 
-  const handleDetailsClick = (bookId) => {
-    
+  const handleDetailsClick = (id) => {
+    navigate(`/book/${id}`);
   };
 
-  const handleAddToCartClick = (bookId) => {
+  const handleAddToCartClick = (id) => {
     
   };
 

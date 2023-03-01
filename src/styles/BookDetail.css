@@ -1,0 +1,38 @@
+.card{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20rem;
+    max-width: 25rem;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+.card_img{
+    width: 15rem;
+    margin-top: 15px;
+}
+
+.buttons{
+    display: flex;
+    padding: 2px;
+    justify-content: space-between;
+}
+
+.back{
+    width: 40%;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.add{
+    width: 40%;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
