@@ -4,6 +4,7 @@ import Appbar from './components/Appbar'
 import ListBook from './components/ListBook';
 import BookDetail from './components/BookDetail';
 import Cart from './components/Cart';
+import NotFound from './components/NotFound';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
 
@@ -39,6 +40,7 @@ function App() {
         <Route path='/' element={<LoginForm onLogin={handleLogin} />} />
         <Route path='/book/:id' element={<BookDetail />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </>
   );
