@@ -4,12 +4,14 @@ import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
+import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/Cart.css';
 
 function Cart({match}) {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const {id} = useParams()
 
   useEffect(() => {
@@ -45,6 +47,7 @@ function Cart({match}) {
       console.log(response.data)
       const newCartItems = cartItems.filter(item => item.id !== book_id);
       setCartItems(newCartItems);
+      setShowModal(true);
     } catch (error) {
       console.log(error);
     }
@@ -91,6 +94,14 @@ function Cart({match}) {
           </tbody>
         </Table>
       )}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Success!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Item has been deleted from cart.
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
