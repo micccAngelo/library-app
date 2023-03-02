@@ -29,11 +29,15 @@ function ListBook() {
             },
           }
         );
-        setBooks(response.data.data.data_per_page);
+        const updatedBooks = response.data.data.data_per_page.map(book => ({
+          ...book,
+          loading: false
+        }));
+        setBooks(updatedBooks);
         setTotalPages(response.data.data.total_page);
       } catch (error) {
         console.log(error);
-      } finally{
+      } finally {
         setLoading(false);
       }
     };
@@ -50,7 +54,16 @@ function ListBook() {
 
   const addToCart = (id) => {
     const user_id = localStorage.getItem('user_id');
-    setCartLoading(true);
+    const updatedBooks = books.map(book => {
+      if (book.id === id) {
+        return {
+          ...book,
+          loading: true
+        };
+      }
+      return book;
+    });
+    setBooks(updatedBooks);
     return axios.post(
       `${process.env.REACT_APP_BASE_URL}/perpustakaan/api/v1/cart`,
       {
@@ -58,7 +71,16 @@ function ListBook() {
         "book_id": id,
       }
     ).finally(() =>{
-      setCartLoading(false);
+      const updatedBooks = books.map(book => {
+        if (book.id === id) {
+          return {
+            ...book,
+            loading: false
+          };
+        }
+        return book;
+      });
+      setBooks(updatedBooks);
     });
   };
   
@@ -71,11 +93,11 @@ function ListBook() {
         console.log(error);
       });
   };
-
+  
   const pageNumbersToShow = 5;
   const rangeStart = Math.max(currentPage - Math.floor(pageNumbersToShow / 2), 1);
   const rangeEnd = Math.min(rangeStart + pageNumbersToShow - 1, totalPages);
-
+  
   return (
     <div>
       <Table striped bordered hover>
@@ -110,8 +132,9 @@ function ListBook() {
                   <td>
                     <Button variant="primary" onClick={() => handleDetailsClick(book.id)}>Details</Button>
                     {' '}
-                    <Button variant="success" onClick={() => handleAddToCartClick(book.id)} disabled={book.stok === 0 || cartLoading}>
-                    {cartLoading ? <Spinner animation="border" size="sm" /> : 'Add to cart'}
+                    <Button variant="success" onClick={() => handleAddToCartClick(book.id)} disabled={book.stok === 0 || book.loading}>
+                      {book.loading && <Spinner animation="border" size="sm" />}
+                      {!book.loading && 'Add to cart'}
                     </Button>
                   </td>
                 </tr>
@@ -126,7 +149,7 @@ function ListBook() {
             onClick={() => handlePageChange(currentPage - 1)}
           />
         )}
-
+  
         {[...Array(totalPages).keys()].slice(rangeStart - 1, rangeEnd).map((pageNumber) => (
           <Pagination.Item
             key={pageNumber + 1}
@@ -136,7 +159,7 @@ function ListBook() {
             {pageNumber + 1}
           </Pagination.Item>
         ))}
-
+  
         {currentPage < totalPages && (
           <Pagination.Next
             onClick={() => handlePageChange(currentPage + 1)}
