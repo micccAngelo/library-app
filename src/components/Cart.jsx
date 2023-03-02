@@ -28,7 +28,7 @@ function Cart({match}) {
         );
         console.log(response.data.data)
         setCartItems(response.data.data);
-        
+       
       } catch (error) {
         console.log(error);
       } finally{
@@ -37,6 +37,9 @@ function Cart({match}) {
     };
     fetchCartItems();
   }, [id]);
+
+  const bookIds = cartItems.map(item => item.id);
+  localStorage.setItem("bookIds", bookIds)
 
   const deleteCartItem = async (user_id, book_id) => {
     try {

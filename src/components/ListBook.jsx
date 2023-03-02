@@ -15,6 +15,7 @@ function ListBook() {
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [modalFail, setModalFail] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -65,6 +66,25 @@ function ListBook() {
       return book;
     });
     setBooks(updatedBooks);
+  
+    const isBookInCart = updatedBooks.find(book => book.id === id)?.is_in_cart;
+    if (isBookInCart) {
+      setModalFail(true);
+      setBooks(prevBooks => {
+        const updatedBooks = prevBooks.map(book => {
+          if (book.id === id) {
+            return {
+              ...book,
+              loading: false
+            };
+          }
+          return book;
+        });
+        return updatedBooks;
+      });
+      return;
+    }
+  
     return axios.post(
       `${process.env.REACT_APP_BASE_URL}/perpustakaan/api/v1/cart`,
       {
@@ -73,20 +93,24 @@ function ListBook() {
       }
     ).then(() => {
       setShowModal(true);
-    }).finally(() =>{
-      const updatedBooks = books.map(book => {
-        if (book.id === id) {
-          return {
-            ...book,
-            loading: false
-          };
-        }
-        return book;
+      setBooks(prevBooks => {
+        const updatedBooks = prevBooks.map(book => {
+          if (book.id === id) {
+            return {
+              ...book,
+              loading: false,
+              is_in_cart: true
+            };
+          }
+          return book;
+        });
+        return updatedBooks;
       });
-      setBooks(updatedBooks);
-      setShowModal(true);
+    }).catch(error => {
+      console.log(error);
     });
   };
+  
   
   
   const handleAddToCartClick = (id) => {
@@ -153,6 +177,14 @@ function ListBook() {
         </Modal.Header>
         <Modal.Body>
           Item has been added to cart.
+        </Modal.Body>
+      </Modal>
+      <Modal show={modalFail} onHide={() => setModalFail(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Failed!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Item is already in cart.
         </Modal.Body>
       </Modal>
       <div className='pagination'>
