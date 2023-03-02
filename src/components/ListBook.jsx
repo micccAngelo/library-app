@@ -13,6 +13,7 @@ function ListBook() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [cartLoading, setCartLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,13 +50,16 @@ function ListBook() {
 
   const addToCart = (id) => {
     const user_id = localStorage.getItem('user_id');
+    setCartLoading(true);
     return axios.post(
       `${process.env.REACT_APP_BASE_URL}/perpustakaan/api/v1/cart`,
       {
         "user_id": user_id,
         "book_id": id,
       }
-    );
+    ).finally(() =>{
+      setCartLoading(false);
+    });
   };
   
   const handleAddToCartClick = (id) => {
@@ -106,8 +110,8 @@ function ListBook() {
                   <td>
                     <Button variant="primary" onClick={() => handleDetailsClick(book.id)}>Details</Button>
                     {' '}
-                    <Button variant="success" onClick={() => handleAddToCartClick(book.id)} disabled={book.stok === 0}>
-                    Add to cart
+                    <Button variant="success" onClick={() => handleAddToCartClick(book.id)} disabled={book.stok === 0 || cartLoading}>
+                    {cartLoading ? <Spinner animation="border" size="sm" /> : 'Add to cart'}
                     </Button>
                   </td>
                 </tr>

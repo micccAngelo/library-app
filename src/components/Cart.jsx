@@ -61,12 +61,12 @@ function Cart({match}) {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>No</th>
-              <th>Title</th>
-              <th>Image</th>
-              <th>Author</th>
-              <th>Published year</th>
-              <th>Action</th>
+              <th className='no'>No</th>
+              <th className='title'>Title</th>
+              <th className='image'>Image</th>
+              <th className='author'>Author</th>
+              <th className='year'>Published year</th>
+              <th className='action'>Action</th>
             </tr>
           </thead>
           <tbody>
