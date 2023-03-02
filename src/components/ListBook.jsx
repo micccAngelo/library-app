@@ -5,6 +5,7 @@ import Table from 'react-bootstrap/Table';
 import Pagination from 'react-bootstrap/Pagination';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
+import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/ListBook.css';
 
@@ -13,6 +14,7 @@ function ListBook() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,7 +71,9 @@ function ListBook() {
         "user_id": user_id,
         "book_id": id,
       }
-    ).finally(() =>{
+    ).then(() => {
+      setShowModal(true);
+    }).finally(() =>{
       const updatedBooks = books.map(book => {
         if (book.id === id) {
           return {
@@ -80,8 +84,10 @@ function ListBook() {
         return book;
       });
       setBooks(updatedBooks);
+      setShowModal(true);
     });
   };
+  
   
   const handleAddToCartClick = (id) => {
     addToCart(id)
@@ -135,6 +141,14 @@ function ListBook() {
                       {book.loading && <Spinner animation="border" size="sm" />}
                       {!book.loading && 'Add to cart'}
                     </Button>
+                    <Modal show={showModal} onHide={() => setShowModal(false)}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Success!</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                       Item has been added to cart.
+                      </Modal.Body>
+                    </Modal>
                   </td>
                 </tr>
               ))
