@@ -141,20 +141,20 @@ function ListBook() {
                       {book.loading && <Spinner animation="border" size="sm" />}
                       {!book.loading && 'Add to cart'}
                     </Button>
-                    <Modal show={showModal} onHide={() => setShowModal(false)}>
-                      <Modal.Header closeButton>
-                        <Modal.Title>Success!</Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                       Item has been added to cart.
-                      </Modal.Body>
-                    </Modal>
                   </td>
                 </tr>
               ))
           )}
         </tbody>
       </Table>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Success!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Item has been added to cart.
+        </Modal.Body>
+      </Modal>
       <div className='pagination'>
       <Pagination className='mt-4'>
         {currentPage > 1 && (

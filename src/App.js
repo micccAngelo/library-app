@@ -5,6 +5,7 @@ import ListBook from './components/ListBook';
 import BookDetail from './components/BookDetail';
 import Cart from './components/Cart';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import NotFound from "./components/NotFound";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path='/' element={<LoginForm onLogin={handleLogin} />}/>
         <Route path='/book/:id' element={<BookDetail />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path="*" element={<NotFound/>} />
       </Routes>
     </Router>
    

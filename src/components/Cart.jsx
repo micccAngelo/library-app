@@ -26,7 +26,7 @@ function Cart({match}) {
         );
         console.log(response.data.data)
         setCartItems(response.data.data);
-
+        
       } catch (error) {
         console.log(error);
       } finally{
@@ -51,8 +51,8 @@ function Cart({match}) {
   };
 
   return (
-    <div>
-      <h1 className='title'>Cart</h1>
+    <div className='cart'>
+      <h1 className='cartTitle'>Cart</h1>
       {loading ? (
         <div className="text-center">
           <Spinner animation="border" variant="primary" />
