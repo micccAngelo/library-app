@@ -47,7 +47,6 @@ const BookDetail = ({ match }) => {
         </Card.Text>
         <div className="buttons">
             <Button className="back" href="/book" variant="primary">Back</Button>
-            <Button className="add" href="/cart" variant="primary" disabled={book[0].stok === 0}>Add To Cart</Button>
         </div>
       </Card.Body>
     </Card>
