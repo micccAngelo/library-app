@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from "react-router-dom";
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
@@ -6,18 +7,26 @@ import Spinner from 'react-bootstrap/Spinner';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/Cart.css';
 
-function Cart() {
+function Cart({match}) {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const {id} = useParams()
 
   useEffect(() => {
     setLoading(true);
     const fetchCartItems = async () => {
       try {
+        const user_id = localStorage.getItem('user_id')
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/perpustakaan/api/v1/cart`
+          `${process.env.REACT_APP_BASE_URL}/perpustakaan/api/v1/cart`,{
+            params: {
+              "user_id" : user_id,
+            },
+          }
         );
+        console.log(response.data.data)
         setCartItems(response.data.data);
+
       } catch (error) {
         console.log(error);
       } finally{
@@ -25,13 +34,17 @@ function Cart() {
       }
     };
     fetchCartItems();
-  }, []);
+  }, [id]);
 
-  const handleRemoveFromCartClick = async (userId, bookId) => {
+  const deleteCartItem = async (user_id, book_id) => {
     try {
-      await axios.delete(
-        `/perpustakaan/api/v1/cart?user_id=${userId}&book_id=${bookId}`
+      const user_id = localStorage.getItem('user_id')
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/perpustakaan/api/v1/cart?user_id=${user_id}&book_id=${book_id}`
       );
+      console.log(response.data)
+      const newCartItems = cartItems.filter(item => item.id !== book_id);
+      setCartItems(newCartItems);
     } catch (error) {
       console.log(error);
     }
@@ -66,7 +79,7 @@ function Cart() {
                   <td>{item.author}</td>
                   <td>{item.publication_year}</td>
                   <td>
-                    <Button variant="danger" onClick={() => handleRemoveFromCartClick(item.id)}>Remove</Button>
+                    <Button variant="danger" onClick={() => deleteCartItem(item.user_id, item.id)}>Remove</Button>
                   </td>
                 </tr>
               ))
