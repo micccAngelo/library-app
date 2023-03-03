@@ -33,7 +33,7 @@ function App() {
 
   return (
     <>
-      <Appbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+    <Appbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <Routes>
         <Route path='/book' element={<ListBook />} />
         <Route path='/' element={<LoginForm onLogin={handleLogin} />} />
@@ -45,12 +45,4 @@ function App() {
   );
 }
 
-function WrappedApp() {
-  return (
-    <Router>
-      <App />
-    </Router>
-  );
-}
-
-export default WrappedApp;
+export default App;
