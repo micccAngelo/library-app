@@ -33,7 +33,7 @@ function LoginForm({ onLogin }) {
       setPassword('');
       setTimeout(() => {
         setShowSuccess(false);
-        navigate('/book');
+        navigate('/');
       }, 2000);
 
     } catch (error) {

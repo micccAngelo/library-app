@@ -7,6 +7,7 @@ import Cart from './components/Cart';
 import NotFound from './components/NotFound';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
@@ -26,17 +27,22 @@ function App() {
     if (user_id) {
       setIsLoggedIn(true);
     }
-    else {
+    else if(window.location.pathname === '/'){
       navigate('/');
+    }
+    else{
+      navigate('/login');
     }
   }, []);
 
+  const isLoginPage = window.location.pathname === '/login';
+
   return (
     <>
-    <Appbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+    {!isLoginPage && <Appbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />}
       <Routes>
-        <Route path='/book' element={<ListBook />} />
-        <Route path='/' element={<LoginForm onLogin={handleLogin} />} />
+        <Route path='/' element={<ListBook />} />
+        <Route path='/login' element={<LoginForm onLogin={handleLogin} />} />
         <Route path='/book/:id' element={<BookDetail />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='*' element={<NotFound />} />

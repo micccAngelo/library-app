@@ -33,7 +33,7 @@ const Appbar = ({ isLoggedIn, handleLogout }) => {
       <Container>
         <Navbar.Brand>Library App</Navbar.Brand>
         <Nav className='me-auto'>
-          <Nav.Link href='/book'>ListBook</Nav.Link>
+          <Nav.Link href='/'>ListBook</Nav.Link>
           <Nav.Link href='/cart'>ListCart</Nav.Link>
         </Nav>
         {isLoggedIn ? (
@@ -61,7 +61,7 @@ const Appbar = ({ isLoggedIn, handleLogout }) => {
           </Nav>
         ) : (
           <Nav className='justify-content-end'>
-            <Button href='/' variant='outline-light'>
+            <Button href='/login' variant='outline-light'>
               Login
             </Button>
           </Nav>
