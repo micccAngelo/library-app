@@ -5,8 +5,8 @@ import ListBook from './components/ListBook';
 import BookDetail from './components/BookDetail';
 import Cart from './components/Cart';
 import NotFound from './components/NotFound';
+import { Navigate } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -43,8 +43,8 @@ function App() {
       <Routes>
         <Route path='/' element={<ListBook />} />
         <Route path='/login' element={<LoginForm onLogin={handleLogin} />} />
-        <Route path='/book/:id' element={<BookDetail />} />
-        <Route path='/cart' element={<Cart />} />
+        <Route path='/book/:id' element={isLoggedIn ? <BookDetail /> : <Navigate to='/login' />} />
+        <Route path='/cart' element={isLoggedIn ? <Cart /> : <Navigate to='/login' />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>

@@ -111,8 +111,6 @@ function ListBook({isLoggedIn}) {
     });
   };
   
-  
-  
   const handleAddToCartClick = (id) => {
     addToCart(id)
       .then(response => {
