@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
+import LoginAPI from '../APIService/LoginAPI';
 import '../styles/LoginForm.css';
 
 function LoginForm({ onLogin }) {
@@ -18,15 +18,11 @@ function LoginForm({ onLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/perpustakaan/api/v1/user/login`,
-        { email, password }
-      );
-
-      localStorage.setItem('user_id', response.data.data.user_id);
-      localStorage.setItem('username', response.data.data.username);
-      onLogin(response.data.data.user_id);
-      setUsername(response.data.data.username);
+      const data = await LoginAPI(email, password);
+      localStorage.setItem('user_id', data.user_id);
+      localStorage.setItem('username', data.username);
+      onLogin(data.user_id);
+      setUsername(data.username);
       setShowSuccess(true);
       setEmail('');
       setPassword('');
@@ -36,7 +32,7 @@ function LoginForm({ onLogin }) {
       }, 2000);
 
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setError('Invalid email or password');
       setShowSuccess(false);
     }
