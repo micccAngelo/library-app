@@ -37,11 +37,10 @@ function ListBook({isLoggedIn}) {
         }));
         setBooks(updatedBooks);
         setTotalPages(response.data.data.total_page);
+        setLoading(false);
       } catch (error) {
         console.log(error);
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
     fetchBooks();
   }, [currentPage]);
@@ -111,20 +110,19 @@ function ListBook({isLoggedIn}) {
     });
   };
   
+  const user_id = localStorage.getItem("user_id")
   const handleAddToCartClick = (id) => {
-    addToCart(id)
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    if(user_id){
+      addToCart(id)
+    }
+    else{
+      navigate('/login')
+    }
   };
   
-  const pageNumbersToShow = 5;
-  const rangeStart = Math.max(currentPage - Math.floor(pageNumbersToShow / 2), 1);
-  const rangeEnd = Math.min(rangeStart + pageNumbersToShow - 1, totalPages);
-  
+  const rangeStart = Math.max(currentPage - 2, 1);
+  const rangeEnd = Math.min(rangeStart + 4, totalPages);
+ 
   return (
     <div>
       <Table striped bordered hover>
@@ -136,7 +134,7 @@ function ListBook({isLoggedIn}) {
             <th className='author'>Author</th>
             <th className='publish_year'>Published year</th>
             <th className='stocks'>Stocks</th>
-            <th>Action</th>
+            <th className='action'>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -157,9 +155,8 @@ function ListBook({isLoggedIn}) {
                   <td>{book.publication_year}</td>
                   <td>{book.stok}</td>
                   <td>
-                    <Button variant="primary" onClick={() => handleDetailsClick(book.id)}>Details</Button>
-                    {' '}
-                    <Button variant="success" onClick={() => handleAddToCartClick(book.id)} disabled={book.stok === 0 || book.loading}>
+                    <Button className='detail' variant="primary" onClick={() => handleDetailsClick(book.id)}>Details</Button>
+                    <Button className='add' variant="success" onClick={() => handleAddToCartClick(book.id)} disabled={book.stok === 0 || book.loading}>
                       {book.loading && <Spinner animation="border" size="sm" />}
                       {!book.loading && 'Add to cart'}
                     </Button>

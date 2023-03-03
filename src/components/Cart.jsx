@@ -28,11 +28,9 @@ function Cart({match}) {
         );
         console.log(response.data.data)
         setCartItems(response.data.data);
-       
+        setLoading(false);
       } catch (error) {
         console.log(error);
-      } finally{
-        setLoading(false);
       }
     };
     fetchCartItems();
@@ -81,7 +79,7 @@ function Cart({match}) {
                 <tr key={item.id}>
                   <td>{index + 1}</td>
                   <td>{item.title}</td>
-                  <td><img className='book_image' src={item.image_s}/></td>
+                  <td><img className='book_image' alt={item.title} src={item.image_s}/></td>
                   <td>{item.author}</td>
                   <td>{item.publication_year}</td>
                   <td>

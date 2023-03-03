@@ -33,7 +33,7 @@ function App() {
     else{
       navigate('/login');
     }
-  }, []);
+  }, [navigate]);
 
   const isLoginPage = window.location.pathname === '/login';
 
@@ -44,7 +44,7 @@ function App() {
         <Route path='/' element={<ListBook />} />
         <Route path='/login' element={<LoginForm onLogin={handleLogin} />} />
         <Route path='/book/:id' element={isLoggedIn ? <BookDetail /> : <Navigate to='/login' />} />
-        <Route path='/cart' element={isLoggedIn ? <Cart /> : <Navigate to='/login' />} />
+        <Route path='/cart' element={<Cart />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </>
