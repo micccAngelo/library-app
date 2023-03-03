@@ -8,8 +8,9 @@ import Spinner from 'react-bootstrap/Spinner';
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/ListBook.css';
+import API from '../API/BaseURL'
 
-function ListBook() {
+function ListBook({isLoggedIn}) {
   const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -22,8 +23,8 @@ function ListBook() {
     setLoading(true);
     const fetchBooks = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/perpustakaan/api/v1/book`,
+        const response = await API.get(
+          `/perpustakaan/api/v1/book`,
           {
             params: {
               page: currentPage,
