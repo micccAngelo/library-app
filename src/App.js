@@ -7,7 +7,6 @@ import Cart from './components/Cart';
 import NotFound from './components/NotFound';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
