@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Pagination from 'react-bootstrap/Pagination';
 import Button from 'react-bootstrap/Button';
@@ -8,7 +7,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/ListBook.css';
-import API from '../API/BaseURL'
+import BaseURL from '../API/BaseURL'
 
 function ListBook({isLoggedIn}) {
   const [books, setBooks] = useState([]);
@@ -23,7 +22,7 @@ function ListBook({isLoggedIn}) {
     setLoading(true);
     const fetchBooks = async () => {
       try {
-        const response = await API.get(
+        const response = await BaseURL.get(
           `/perpustakaan/api/v1/book`,
           {
             params: {
@@ -86,8 +85,8 @@ function ListBook({isLoggedIn}) {
       return;
     }
   
-    return axios.post(
-      `${process.env.REACT_APP_BASE_URL}/perpustakaan/api/v1/cart`,
+    return BaseURL.post(
+      `/perpustakaan/api/v1/cart`,
       {
         "user_id": user_id,
         "book_id": id,

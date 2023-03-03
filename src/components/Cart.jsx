@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import BaseURL from '../API/BaseURL'
 import '../styles/Cart.css';
 
 function Cart({match}) {
@@ -19,8 +19,8 @@ function Cart({match}) {
     const fetchCartItems = async () => {
       try {
         const user_id = localStorage.getItem('user_id')
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/perpustakaan/api/v1/cart`,{
+        const response = await BaseURL.get(
+          `/perpustakaan/api/v1/cart`,{
             params: {
               "user_id" : user_id,
             },
@@ -44,8 +44,8 @@ function Cart({match}) {
   const deleteCartItem = async (user_id, book_id) => {
     try {
       const user_id = localStorage.getItem('user_id')
-      const response = await axios.delete(
-        `${process.env.REACT_APP_BASE_URL}/perpustakaan/api/v1/cart?user_id=${user_id}&book_id=${book_id}`
+      const response = await BaseURL.delete(
+        `/perpustakaan/api/v1/cart?user_id=${user_id}&book_id=${book_id}`
       );
       console.log(response.data)
       const newCartItems = cartItems.filter(item => item.id !== book_id);

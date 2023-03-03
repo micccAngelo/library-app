@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import BaseURL from '../API/BaseURL'
 import Spinner from 'react-bootstrap/Spinner';
 import '../styles/BookDetail.css';
 
@@ -13,8 +13,8 @@ const BookDetail = ({ match }) => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/perpustakaan/api/v1/book/${id}`
+        const response = await BaseURL.get(
+          `/perpustakaan/api/v1/book/${id}`
         );
         console.log(response.data.data)
         setBook(response.data.data);
@@ -46,7 +46,7 @@ const BookDetail = ({ match }) => {
           ISBN: {book[0].isbn} <br />
         </Card.Text>
         <div className="buttons">
-            <Button className="back" href="/book" variant="primary">Back</Button>
+            <Button className="back" href="/" variant="primary">Back</Button>
         </div>
       </Card.Body>
     </Card>
