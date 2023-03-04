@@ -27,8 +27,13 @@ function Cart({match}) {
       const newCartItems = cartItems.filter(item => item.id !== book_id);
       setCartItems(newCartItems);
       setShowModal(true);
+      GetCartAPI().then(data => {
+        setCartItems(data);
+        setLoading(false);
+      });
     }
   };
+  
   
   return (
     <div className='cart'>

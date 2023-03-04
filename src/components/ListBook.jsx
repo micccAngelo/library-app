@@ -9,7 +9,6 @@ import GetBooksAPI from '../APIService/GetBookAPI';
 import PostToCartAPI from '../APIService/PostToCartAPI';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/ListBook.css';
-import BaseURL from '../API/BaseURL'
 
 function ListBook({isLoggedIn}) {
   const [books, setBooks] = useState([]);
