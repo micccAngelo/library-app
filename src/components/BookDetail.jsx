@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import BaseURL from '../API/BaseURL'
 import Spinner from 'react-bootstrap/Spinner';
+import GetDetailAPI from '../APIService/GetDetailAPI';
 import '../styles/BookDetail.css';
 
 const BookDetail = ({ match }) => {
@@ -12,17 +12,9 @@ const BookDetail = ({ match }) => {
 
   useEffect(() => {
     const fetchBook = async () => {
-      try {
-        const response = await BaseURL.get(
-          `/perpustakaan/api/v1/book/${id}`
-        );
-        console.log(response.data.data)
-        setBook(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
+      const bookData = await GetDetailAPI(id);
+      setBook(bookData);
     };
-    console.log(id)
     fetchBook();
   }, [id]);
 

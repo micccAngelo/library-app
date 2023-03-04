@@ -5,6 +5,8 @@ import Pagination from 'react-bootstrap/Pagination';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Modal from 'react-bootstrap/Modal';
+import GetBooksAPI from '../APIService/GetBookAPI';
+import PostToCartAPI from '../APIService/PostToCartAPI';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/ListBook.css';
 import BaseURL from '../API/BaseURL'
@@ -21,26 +23,10 @@ function ListBook({isLoggedIn}) {
   useEffect(() => {
     setLoading(true);
     const fetchBooks = async () => {
-      try {
-        const response = await BaseURL.get(
-          `/perpustakaan/api/v1/book`,
-          {
-            params: {
-              page: currentPage,
-              limit: 20,
-            },
-          }
-        );
-        const updatedBooks = response.data.data.data_per_page.map(book => ({
-          ...book,
-          loading: false
-        }));
-        setBooks(updatedBooks);
-        setTotalPages(response.data.data.total_page);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      } 
+      const { books, totalPages } = await GetBooksAPI(currentPage);
+      setBooks(books);
+      setTotalPages(totalPages);
+      setLoading(false);
     };
     fetchBooks();
   }, [currentPage]);
@@ -84,13 +70,7 @@ function ListBook({isLoggedIn}) {
       return;
     }
   
-    return BaseURL.post(
-      `/perpustakaan/api/v1/cart`,
-      {
-        "user_id": user_id,
-        "book_id": id,
-      }
-    ).then(() => {
+    return PostToCartAPI(user_id, id).then(() => {
       setShowModal(true);
       setBooks(prevBooks => {
         const updatedBooks = prevBooks.map(book => {

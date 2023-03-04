@@ -1,59 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import BaseURL from '../API/BaseURL'
+import DeleteAPI from '../APIService/deleteAPI';
 import '../styles/Cart.css';
+import GetCartAPI from '../APIService/GetCartAPI';
 
 function Cart({match}) {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const {id} = useParams()
 
   useEffect(() => {
     setLoading(true);
-    const fetchCartItems = async () => {
-      try {
-        const user_id = localStorage.getItem('user_id')
-        const response = await BaseURL.get(
-          `/perpustakaan/api/v1/cart`,{
-            params: {
-              "user_id" : user_id,
-            },
-          }
-        );
-        console.log(response.data.data)
-        setCartItems(response.data.data);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchCartItems();
-  }, [id]);
+    GetCartAPI().then(data => {
+      setCartItems(data);
+      setLoading(false);
+    });
+  }, []);
 
-  const bookIds = cartItems.map(item => item.id);
-  localStorage.setItem("bookIds", bookIds)
-
-  const deleteCartItem = async (user_id, book_id) => {
-    try {
-      const user_id = localStorage.getItem('user_id')
-      const response = await BaseURL.delete(
-        `/perpustakaan/api/v1/cart?user_id=${user_id}&book_id=${book_id}`
-      );
-      console.log(response.data)
+  const deleteCartItem = async (user_id, book_id, item) => {
+    const success = await DeleteAPI(book_id);
+    if (success) {
       const newCartItems = cartItems.filter(item => item.id !== book_id);
       setCartItems(newCartItems);
       setShowModal(true);
-    } catch (error) {
-      console.log(error);
     }
   };
-
+  
   return (
     <div className='cart'>
       <h1 className='cartTitle'>Cart</h1>
