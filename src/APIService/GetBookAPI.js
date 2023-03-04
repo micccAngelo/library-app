@@ -11,12 +11,18 @@ export const GetBooksAPI = async (currentPage) => {
         },
       }
     );
-    const updatedBooks = response.data.data.data_per_page.map(book => ({
-      ...book,
-      loading: false
-    }));
-    const totalPages = response.data.data.total_page;
-    return { books: updatedBooks, totalPages };
+    const { data } = response;
+    if (data.status && data.code === 200) {
+      const updatedBooks = data.data.data_per_page.map(book => ({
+        ...book,
+        loading: false
+      }));
+      const totalPages = data.data.total_page;
+      return { books: updatedBooks, totalPages };
+    } else {
+      console.log("Failed to get books");
+      return { books: [], totalPages: 0 };
+    }
   } catch (error) {
     console.log(error);
     return { books: [], totalPages: 0 };

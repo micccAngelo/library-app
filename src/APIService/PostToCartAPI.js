@@ -2,14 +2,19 @@ import BaseURL from '../API/BaseURL';
 
 export const PostToCartAPI = async (user_id, book_id) => {
   try {
-    await BaseURL.post(
+    const response = await BaseURL.post(
       `/perpustakaan/api/v1/cart`,
       {
         "user_id": user_id,
         "book_id": book_id,
       }
     );
-    return true;
+    const { data } = response;
+    if (data.status && data.code === 200) {
+      return true;
+    } else {
+      throw new Error(data.message || "Failed to add book to cart");
+    }
   } catch (error) {
     console.log(error);
     return false;
@@ -17,4 +22,3 @@ export const PostToCartAPI = async (user_id, book_id) => {
 };
 
 export default PostToCartAPI;
-

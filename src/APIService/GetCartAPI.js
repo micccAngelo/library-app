@@ -10,8 +10,13 @@ export const GetCartAPI = async () => {
         },
       }
     );
-    console.log(response.data.data);
-    return response.data.data;
+    
+    if (response.status === 200 && response.data.message === "Success") {
+      console.log(response.data.data);
+      return response.data.data;
+    } else {
+      throw new Error("Failed to get cart items");
+    }
   } catch (error) {
     console.log(error);
   }

@@ -3,7 +3,13 @@ import BaseURL from '../API/BaseURL';
 export const GetDetailAPI = async (id) => {
   try {
     const response = await BaseURL.get(`/perpustakaan/api/v1/book/${id}`);
-    return response.data.data;
+    const { data } = response;
+    if (data.status && data.code === 200) {
+      return data.data;
+    } else {
+      console.log("Failed to get book detail");
+      return null;
+    }
   } catch (error) {
     console.log(error);
     return null;

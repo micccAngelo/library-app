@@ -1,14 +1,17 @@
-import BaseURL from '../API/BaseURL'
+import BaseURL from '../API/BaseURL';
 
 export const LoginAPI = async (email, password) => {
   try {
-    const response = await BaseURL.post(
-      `/perpustakaan/api/v1/user/login`,
-      { email, password }
-    );
-    return response.data.data;
+    const response = await BaseURL.post('/perpustakaan/api/v1/user/login', { email, password });
+    const { data } = response;
+    if (data.status && data.code === 200) {
+      return data.data;
+    } else {
+      throw new Error(data.message || "Failed to login");
+    }
   } catch (error) {
-    throw new Error('Invalid email or password');
+    console.log(error);
+    throw new Error("Failed to login");
   }
 };
 
