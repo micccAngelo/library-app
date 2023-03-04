@@ -34,7 +34,6 @@ function Cart({match}) {
     }
   };
   
-  
   return (
     <div className='cart'>
       <h1 className='cartTitle'>Cart</h1>
@@ -43,38 +42,40 @@ function Cart({match}) {
           <Spinner animation="border" variant="primary" />
         </div>
       ) : (
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th className='no'>No</th>
-              <th className='title'>Title</th>
-              <th className='image'>Image</th>
-              <th className='author'>Author</th>
-              <th className='year'>Published year</th>
-              <th className='action'>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cartItems.length > 0 ? (
-              cartItems.map((item, index) => (
-                <tr key={item.id}>
-                  <td>{index + 1}</td>
-                  <td>{item.title}</td>
-                  <td><img className='book_image' alt={item.title} src={item.image_s}/></td>
-                  <td>{item.author}</td>
-                  <td>{item.publication_year}</td>
-                  <td>
-                    <Button variant="danger" onClick={() => deleteCartItem(item.user_id, item.id)}>Remove</Button>
-                  </td>
+        <>
+          {cartItems && cartItems.length > 0 ? (
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th className='no'>No</th>
+                  <th className='title'>Title</th>
+                  <th className='image'>Image</th>
+                  <th className='author'>Author</th>
+                  <th className='year'>Published year</th>
+                  <th className='action'>Action</th>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6" className="text-center">No items in cart</td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+              </thead>
+              <tbody>
+                {cartItems.map((item, index) => (
+                  <tr key={item.id}>
+                    <td>{index + 1}</td>
+                    <td>{item.title}</td>
+                    <td><img className='book_image' alt={item.title} src={item.image_s}/></td>
+                    <td>{item.author}</td>
+                    <td>{item.publication_year}</td>
+                    <td>
+                      <Button variant="danger" onClick={() => deleteCartItem(item.user_id, item.id)}>Remove</Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          ) : (
+            <div className="text-center">
+              No items in cart
+            </div>
+          )}
+        </>
       )}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
@@ -85,7 +86,7 @@ function Cart({match}) {
         </Modal.Body>
       </Modal>
     </div>
-  );
+  );  
 }
 
 export default Cart;

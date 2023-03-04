@@ -10,7 +10,7 @@ import PostToCartAPI from '../APIService/PostToCartAPI';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/ListBook.css';
 
-function ListBook({isLoggedIn}) {
+function ListBook() {
   const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
