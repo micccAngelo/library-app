@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Button from 'react-bootstrap/Button';
+import Buttons from '../ReusableComponents/Buttons';
 import Modal from 'react-bootstrap/Modal';
 
 const Appbar = ({ isLoggedIn, handleLogout }) => {
@@ -41,29 +41,21 @@ const Appbar = ({ isLoggedIn, handleLogout }) => {
             <Navbar.Text className='me-3'>
               Logged in as: <strong>{displayName}</strong>
             </Navbar.Text>
-            <Button onClick={handleLogoutClick} variant='outline-light'>
-              Logout
-            </Button>
+            <Buttons variant='outline-light' label='Logout' onClick={handleLogoutClick}/>
             <Modal show={showLogoutModal} onHide={handleLogoutCancel}>
               <Modal.Header closeButton>
                 <Modal.Title>Confirm Logout</Modal.Title>
               </Modal.Header>
               <Modal.Body>Are you sure you want to log out?</Modal.Body>
               <Modal.Footer>
-                <Button variant='secondary' onClick={handleLogoutCancel}>
-                  Cancel
-                </Button>
-                <Button variant='primary' href="/" onClick={handleLogoutConfirm}>
-                  Logout
-                </Button>
+                <Buttons variant='secondary' label='Cancel' onClick={handleLogoutCancel}/>
+                <Buttons variant='primary' label='Logout' onClick={handleLogoutConfirm} href={'/'}/>
               </Modal.Footer>
             </Modal>
           </Nav>
         ) : (
           <Nav className='justify-content-end'>
-            <Button href='/login' variant='outline-light'>
-              Login
-            </Button>
+            <Buttons variant='outline-light' label='Login' onClick={handleLogoutClick} href={'/login'}/>
           </Nav>
         )}
       </Container>

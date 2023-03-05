@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
+import Buttons from '../ReusableComponents/Buttons';
 import Spinner from 'react-bootstrap/Spinner';
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -64,7 +64,7 @@ function Cart({match}) {
                     <td>{item.author}</td>
                     <td>{item.publication_year}</td>
                     <td>
-                      <Button variant="danger" onClick={() => deleteCartItem(item.user_id, item.id)}>Remove</Button>
+                      <Buttons variant='danger' label='Delete' onClick={() => deleteCartItem(item.user_id, item.id)}/>
                     </td>
                   </tr>
                 ))}

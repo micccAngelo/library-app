@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
+import Buttons from '../ReusableComponents/Buttons';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
@@ -63,9 +63,7 @@ function LoginForm({ onLogin }) {
               placeholder="Password" />
           </Form.Group>
           {error && <div>{error}</div>}
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
+          <Buttons variant='primary' label='Submit'type={'submit'} />
           <Modal show={showSuccess} onHide={() => setShowSuccess(false)}>
             <Modal.Header closeButton>
               <Modal.Title>Success!</Modal.Title>

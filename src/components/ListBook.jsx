@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import Pagination from 'react-bootstrap/Pagination';
-import Button from 'react-bootstrap/Button';
+import Buttons from '../ReusableComponents/Buttons';
 import Spinner from 'react-bootstrap/Spinner';
 import Modal from 'react-bootstrap/Modal';
 import GetBooksAPI from '../APIService/GetBookAPI';
@@ -134,11 +134,9 @@ function ListBook() {
                   <td>{book.publication_year}</td>
                   <td>{book.stok}</td>
                   <td>
-                    <Button className='detail' variant="primary" onClick={() => handleDetailsClick(book.id)}>Details</Button>
-                    <Button className='add' variant="success" onClick={() => handleAddToCartClick(book.id)} disabled={book.stok === 0 || book.loading}>
-                      {book.loading && <Spinner animation="border" size="sm" />}
-                      {!book.loading && 'Add to cart'}
-                    </Button>
+                    <Buttons className='detail' variant='primary' label='Details' onClick={() => handleDetailsClick(book.id)}/>
+                    <Buttons className='add' variant="success" onClick={() => handleAddToCartClick(book.id)} disabled={book.stok === 0 || book.loading} 
+                    label={book.loading ? <Spinner animation="border" size="sm" /> : 'Add to cart'} />
                   </td>
                 </tr>
               ))
