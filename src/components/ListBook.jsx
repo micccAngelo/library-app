@@ -101,7 +101,7 @@ function ListBook() {
         className='add' 
         variant="success" 
         onClick={() => addToCart(props.book.id)} 
-        disabled={props.book.stok === 0} 
+        disabled={props.book.stok === 0 || props.book.loading} 
         label={props.book.loading ? <Loadings variant="danger" /> : 'Add to cart'} 
       />
     );
