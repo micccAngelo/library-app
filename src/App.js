@@ -27,9 +27,6 @@ function App() {
     if (user_id) {
       setIsLoggedIn(true);
     }
-    else if(window.location.pathname === '/'){
-      navigate('/');
-    }
     else{
       navigate('/login');
     }
