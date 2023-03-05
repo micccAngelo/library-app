@@ -143,7 +143,7 @@ function ListBook() {
                   <td>{book.stok}</td>
                   <td>
                     <Buttons className='detail' variant='primary' label='Details' onClick={() => handleDetailsClick(book.id)}/>
-                    <ButtonAddToCart book={book} loading={book.loading}/>
+                    <ButtonAddToCart book={book}/>
                   </td>
                 </tr>
               ))
