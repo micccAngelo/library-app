@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import Buttons from '../ReusableComponents/Buttons';
-import Spinner from 'react-bootstrap/Spinner';
+import Loadings from '../ReusableComponents/Loadings';
 import Modals from '../ReusableComponents/Modals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DeleteAPI from '../APIService/deleteAPI';
@@ -38,9 +38,7 @@ function Cart({match}) {
     <div className='cart'>
       <h1 className='cartTitle'>Cart</h1>
       {loading ? (
-        <div className="text-center">
-          <Spinner animation="border" variant="primary" />
-        </div>
+        <Loadings variant="danger" />
       ) : (
         <>
           {cartItems && cartItems.length > 0 ? (

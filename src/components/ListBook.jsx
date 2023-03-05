@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import Pagination from 'react-bootstrap/Pagination';
 import Buttons from '../ReusableComponents/Buttons';
-import Spinner from 'react-bootstrap/Spinner';
 import Modals from '../ReusableComponents/Modals';
 import GetBooksAPI from '../APIService/GetBookAPI';
 import PostToCartAPI from '../APIService/PostToCartAPI';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/ListBook.css';
+import Loadings from '../ReusableComponents/Loadings';
 
 function ListBook() {
   const [books, setBooks] = useState([]);
@@ -119,9 +119,9 @@ function ListBook() {
         <tbody>
           {loading ? (
             <tr>
-              <td colSpan="7" className="text-center">
-                <Spinner animation="border" variant="primary" />
-              </td>
+              <td colSpan="7" style={{ textAlign: 'center' }}>
+                <Loadings variant="danger" />
+              </td> 
             </tr>
           ) : (
             books.length > 0 &&
@@ -136,7 +136,7 @@ function ListBook() {
                   <td>
                     <Buttons className='detail' variant='primary' label='Details' onClick={() => handleDetailsClick(book.id)}/>
                     <Buttons className='add' variant="success" onClick={() => handleAddToCartClick(book.id)} disabled={book.stok === 0 || book.loading} 
-                    label={book.loading ? <Spinner animation="border" size="sm" /> : 'Add to cart'} />
+                    label={book.loading ? <Loadings variant="danger" /> : 'Add to cart'} />
                   </td>
                 </tr>
               ))

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
-import Spinner from 'react-bootstrap/Spinner';
+import Loadings from '../ReusableComponents/Loadings';
 import GetDetailAPI from '../APIService/GetDetailAPI';
 import '../styles/BookDetail.css';
 import Buttons from '../ReusableComponents/Buttons';
@@ -20,9 +20,7 @@ const BookDetail = ({ match }) => {
 
   if (!book) {
     return (
-      <div colSpan='7' className='text-center'>
-        <Spinner animation='border' variant='primary' />
-      </div>
+      <Loadings variant="danger" />
     );
   }
 
