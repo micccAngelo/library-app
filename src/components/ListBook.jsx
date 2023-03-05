@@ -44,47 +44,33 @@ function ListBook() {
     const addToCart = (id) => {
       setLoading(true);
       const user_id = localStorage.getItem('user_id');
-      const updatedBooks = books.map(book => {
-        if (book.id === id) {
-          return {
-            ...book,
-            loading: true
-          };
-        }
-        return book;
-      });
-      setBooks(updatedBooks);
-  
-      return PostToCartAPI(user_id, id).then(() => {
-        setShowModal(true);
-        setBooks(prevBooks => {
-          const updatedBooks = prevBooks.map(book => {
-            if (book.id === id) {
-              return {
-                ...book,
-                loading: false,
-              };
-            }
-            return book;
-          });
-          return updatedBooks;
+    
+      PostToCartAPI(user_id, id)
+        .then(() => {
+          setShowModal(true);
+          setBooks((prevBooks) =>
+            prevBooks.map((book) =>
+              book.id === id ? { ...book, loading: false } : book
+            )
+          );
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setLoading(false);
         });
-        setLoading(false);
-      }).catch(error => {
-        console.log(error);
-        setLoading(false);
-      });
     };
-  
+    
     return (
-      <Buttons 
-        className='add' 
-        variant="success" 
-        onClick={() => addToCart(props.book.id)} 
-        disabled={props.book.stok === 0 || props.book.loading} 
-        label={props.book.loading ? <Loadings variant="danger" /> : 'Add to cart'} 
+      <Buttons
+        className="add"
+        variant="success"
+        onClick={() => addToCart(props.book.id)}
+        disabled={props.book.stok === 0 || loading}
+        label={loading ? <Loadings variant="danger" /> : 'Add to cart'}
       />
     );
+    
   };  
   
   const rangeStart = Math.max(currentPage - 2, 1);
