@@ -41,7 +41,8 @@ function App() {
     <>
       {!isLoginPage && <Appbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />}
       <Routes>
-        <Route path='/' element={<ListBook />} />
+        <Route path='/' element={<Navigate to='/book' />} />
+        <Route path='/book' element={<ListBook />} />
         <Route path='/login' element={<LoginForm onLogin={handleLogin} />} />
         <Route path='/book/:id' element={isLoggedIn ? <BookDetail /> : <Navigate to='/login' />} />
         <Route path='/cart' element={<Cart />} />

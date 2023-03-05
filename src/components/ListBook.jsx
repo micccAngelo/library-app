@@ -101,7 +101,7 @@ function ListBook() {
   
   const rangeStart = Math.max(currentPage - 2, 1);
   const rangeEnd = Math.min(rangeStart + 4, totalPages);
- 
+
   return (
     <div>
       <Table striped bordered hover>

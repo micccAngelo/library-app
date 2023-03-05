@@ -28,7 +28,7 @@ function LoginForm({ onLogin }) {
       setPassword('');
       setTimeout(() => {
         setShowSuccess(false);
-        navigate('/');
+        navigate('/book');
       }, 2000);
 
     } catch (error) {
