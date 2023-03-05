@@ -57,9 +57,10 @@ function ListBook() {
         })
         .catch((error) => {
           console.log(error);
+          setModalFail(true);
           setLoading(false);
         });
-    };
+    };    
     
     return (
       <Buttons
@@ -70,7 +71,6 @@ function ListBook() {
         label={loading ? <Loadings variant="danger" /> : 'Add to cart'}
       />
     );
-    
   };  
   
   const rangeStart = Math.max(currentPage - 2, 1);
