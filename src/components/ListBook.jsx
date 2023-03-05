@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table';
 import Pagination from 'react-bootstrap/Pagination';
 import Buttons from '../ReusableComponents/Buttons';
 import Spinner from 'react-bootstrap/Spinner';
-import Modal from 'react-bootstrap/Modal';
+import Modals from '../ReusableComponents/Modals';
 import GetBooksAPI from '../APIService/GetBookAPI';
 import PostToCartAPI from '../APIService/PostToCartAPI';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -143,22 +143,18 @@ function ListBook() {
           )}
         </tbody>
       </Table>
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Success!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Item has been added to cart.
-        </Modal.Body>
-      </Modal>
-      <Modal show={modalFail} onHide={() => setModalFail(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Failed!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Item is already in cart.
-        </Modal.Body>
-      </Modal>
+      <Modals
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        title="Success!"
+        message="Item has been added to cart."
+      />
+      <Modals
+        show={modalFail}
+        onHide={() => setModalFail(false)}
+        title="Failed!"
+        message="Item is already in cart."
+      />
       <div className='pagination'>
       <Pagination className='mt-4'>
         {currentPage > 1 && (

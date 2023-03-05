@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Buttons from '../ReusableComponents/Buttons';
-import Modal from 'react-bootstrap/Modal';
+import Modals from '../ReusableComponents/Modals'
 
 const Appbar = ({ isLoggedIn, handleLogout }) => {
   const [displayName, setDisplayName] = useState('');
@@ -42,16 +42,17 @@ const Appbar = ({ isLoggedIn, handleLogout }) => {
               Logged in as: <strong>{displayName}</strong>
             </Navbar.Text>
             <Buttons variant='outline-light' label='Logout' onClick={handleLogoutClick}/>
-            <Modal show={showLogoutModal} onHide={handleLogoutCancel}>
-              <Modal.Header closeButton>
-                <Modal.Title>Confirm Logout</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>Are you sure you want to log out?</Modal.Body>
-              <Modal.Footer>
-                <Buttons variant='secondary' label='Cancel' onClick={handleLogoutCancel}/>
-                <Buttons variant='primary' label='Logout' onClick={handleLogoutConfirm} href={'/'}/>
-              </Modal.Footer>
-            </Modal>
+            <Modals
+              show={showLogoutModal}
+              title="Confirm Logout"
+              message="Are you sure you want to log out?"
+              primaryButtonLabel="Logout"
+              primaryButtonVariant="primary"
+              onPrimaryButtonClick={handleLogoutConfirm}
+              secondaryButtonLabel="Cancel"
+              secondaryButtonVariant="secondary"
+              onSecondaryButtonClick={handleLogoutCancel}
+            />
           </Nav>
         ) : (
           <Nav className='justify-content-end'>

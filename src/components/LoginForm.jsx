@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Buttons from '../ReusableComponents/Buttons';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
-import Modal from 'react-bootstrap/Modal';
+import Modals from '../ReusableComponents/Modals';
 import LoginAPI from '../APIService/LoginAPI';
 import '../styles/LoginForm.css';
 
@@ -64,14 +64,12 @@ function LoginForm({ onLogin }) {
           </Form.Group>
           {error && <div>{error}</div>}
           <Buttons variant='primary' label='Submit'type={'submit'} />
-          <Modal show={showSuccess} onHide={() => setShowSuccess(false)}>
-            <Modal.Header closeButton>
-              <Modal.Title>Success!</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              Hello {username}!
-            </Modal.Body>
-          </Modal>
+          <Modals
+            show={showSuccess}
+            onHide={() => setShowSuccess(false)}
+            title="Success!"
+            message={`Hello ${username}!`}
+          />
         </Form>
       </Card>
     </div>

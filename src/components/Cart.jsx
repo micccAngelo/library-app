@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import Buttons from '../ReusableComponents/Buttons';
 import Spinner from 'react-bootstrap/Spinner';
-import Modal from 'react-bootstrap/Modal';
+import Modals from '../ReusableComponents/Modals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DeleteAPI from '../APIService/deleteAPI';
 import '../styles/Cart.css';
@@ -77,14 +77,12 @@ function Cart({match}) {
           )}
         </>
       )}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Success!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Item has been deleted from cart.
-        </Modal.Body>
-      </Modal>
+      <Modals
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        title="Success!"
+        message="Item has been deleted from cart."
+      />
     </div>
   );  
 }
