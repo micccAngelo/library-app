@@ -38,66 +38,74 @@ function ListBook() {
     navigate(`/book/${id}`);
   };
 
-  const addToCart = (id) => {
-    const user_id = localStorage.getItem('user_id');
-    const updatedBooks = books.map(book => {
-      if (book.id === id) {
-        return {
-          ...book,
-          loading: true
-        };
+  const ButtonAddToCart = (props) => {
+    const [loading, setLoading] = useState(false);
+  
+    const addToCart = (id) => {
+      setLoading(true);
+      const user_id = localStorage.getItem('user_id');
+      const updatedBooks = books.map(book => {
+        if (book.id === id) {
+          return {
+            ...book,
+            loading: true
+          };
+        }
+        return book;
+      });
+      setBooks(updatedBooks);
+  
+      const isBookInCart = updatedBooks.find(book => book.id === id)?.is_in_cart;
+      if (isBookInCart) {
+        setModalFail(true);
+        setBooks(prevBooks => {
+          const updatedBooks = prevBooks.map(book => {
+            if (book.id === id) {
+              return {
+                ...book,
+                loading: false
+              };
+            }
+            return book;
+          });
+          return updatedBooks;
+        });
+        setLoading(false);
+        return;
       }
-      return book;
-    });
-    setBooks(updatedBooks);
   
-    const isBookInCart = updatedBooks.find(book => book.id === id)?.is_in_cart;
-    if (isBookInCart) {
-      setModalFail(true);
-      setBooks(prevBooks => {
-        const updatedBooks = prevBooks.map(book => {
-          if (book.id === id) {
-            return {
-              ...book,
-              loading: false
-            };
-          }
-          return book;
+      return PostToCartAPI(user_id, id).then(() => {
+        setShowModal(true);
+        setBooks(prevBooks => {
+          const updatedBooks = prevBooks.map(book => {
+            if (book.id === id) {
+              return {
+                ...book,
+                loading: false,
+                is_in_cart: true
+              };
+            }
+            return book;
+          });
+          return updatedBooks;
         });
-        return updatedBooks;
+        setLoading(false);
+      }).catch(error => {
+        console.log(error);
+        setLoading(false);
       });
-      return;
-    }
+    };
   
-    return PostToCartAPI(user_id, id).then(() => {
-      setShowModal(true);
-      setBooks(prevBooks => {
-        const updatedBooks = prevBooks.map(book => {
-          if (book.id === id) {
-            return {
-              ...book,
-              loading: false,
-              is_in_cart: true
-            };
-          }
-          return book;
-        });
-        return updatedBooks;
-      });
-    }).catch(error => {
-      console.log(error);
-    });
-  };
-  
-  const user_id = localStorage.getItem("user_id")
-  const handleAddToCartClick = (id) => {
-    if(user_id){
-      addToCart(id)
-    }
-    else{
-      navigate('/login')
-    }
-  };
+    return (
+      <Buttons 
+        className='add' 
+        variant="success" 
+        onClick={() => addToCart(props.book.id)} 
+        disabled={props.book.stok === 0} 
+        label={props.book.loading ? <Loadings variant="danger" /> : 'Add to cart'} 
+      />
+    );
+  };  
   
   const rangeStart = Math.max(currentPage - 2, 1);
   const rangeEnd = Math.min(rangeStart + 4, totalPages);
@@ -135,8 +143,7 @@ function ListBook() {
                   <td>{book.stok}</td>
                   <td>
                     <Buttons className='detail' variant='primary' label='Details' onClick={() => handleDetailsClick(book.id)}/>
-                    <Buttons className='add' variant="success" onClick={() => handleAddToCartClick(book.id)} disabled={book.stok === 0 || book.loading} 
-                    label={book.loading ? <Loadings variant="danger" /> : 'Add to cart'} />
+                    <ButtonAddToCart book={book} loading={book.loading}/>
                   </td>
                 </tr>
               ))
