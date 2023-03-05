@@ -55,25 +55,6 @@ function ListBook() {
       });
       setBooks(updatedBooks);
   
-      const isBookInCart = updatedBooks.find(book => book.id === id)?.is_in_cart;
-      if (isBookInCart) {
-        setModalFail(true);
-        setBooks(prevBooks => {
-          const updatedBooks = prevBooks.map(book => {
-            if (book.id === id) {
-              return {
-                ...book,
-                loading: false
-              };
-            }
-            return book;
-          });
-          return updatedBooks;
-        });
-        setLoading(false);
-        return;
-      }
-  
       return PostToCartAPI(user_id, id).then(() => {
         setShowModal(true);
         setBooks(prevBooks => {
@@ -82,7 +63,6 @@ function ListBook() {
               return {
                 ...book,
                 loading: false,
-                is_in_cart: true
               };
             }
             return book;
