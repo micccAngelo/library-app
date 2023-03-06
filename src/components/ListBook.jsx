@@ -44,17 +44,7 @@ function ListBook() {
     const addToCart = (id) => {
       setLoading(true);
       const user_id = localStorage.getItem('user_id');
-    
-      PostToCartAPI(user_id, id)
-        .then(() => {
-          setShowModal(true);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          setModalFail(true);
-          setLoading(false);
-        });
+      PostToCartAPI(user_id, id, setModalFail, setShowModal)  
     };    
     
     return (
