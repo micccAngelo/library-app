@@ -44,7 +44,21 @@ function ListBook() {
     const addToCart = (id) => {
       setLoading(true);
       const user_id = localStorage.getItem('user_id');
-      PostToCartAPI(user_id, id, setModalFail, setShowModal)  
+    
+      PostToCartAPI(user_id, id)
+      .then((success) => {
+        if (success) {
+          setShowModal(true);
+        } else {
+          setModalFail(true);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setModalFail(true);
+        setLoading(false);
+      });
     };    
     
     return (
