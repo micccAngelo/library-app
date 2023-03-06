@@ -19,7 +19,9 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem('user_id');
+    localStorage.removeItem('username');
     setIsLoggedIn(false);
+    navigate('/login');
   };
 
   useEffect(() => {
