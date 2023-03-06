@@ -7,10 +7,10 @@ export const GetDetailAPI = async (id) => {
     if (data.status && data.message === 'Success') {
       return data.data;
     } else {
-      return Promise.resolve();
+      return Promise.reject();
     }
   } catch (error) {
-    return Promise.resolve();
+    return Promise.reject();
   }
 };
 

@@ -15,7 +15,7 @@ export const PostToCartAPI = async (user_id, book_id) => {
       if (data.message === 'Data cart Created') {
         return true;
       } else {
-        return Promise.resolve();
+        return Promise.reject();
       }
     } 
   } catch (error) {

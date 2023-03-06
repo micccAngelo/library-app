@@ -7,11 +7,11 @@ export const LoginAPI = async (email, password) => {
     if (data.status && data.message === 'Success') {
       return data.data;
     } else {
-      return Promise.resolve();
+      return Promise.reject();
     }
   } catch (error) {
     console.log(error);
-    return Promise.resolve();
+    return Promise.reject();
   }
 };
 

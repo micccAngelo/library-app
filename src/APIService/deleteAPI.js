@@ -11,7 +11,7 @@ export const DeleteAPI = async (book_id) => {
       console.log(data.message);
       return true;
     } else {
-      return Promise.resolve();
+      return Promise.reject();
     }
   } catch (error) {
     console.log(error);
