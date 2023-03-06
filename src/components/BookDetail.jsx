@@ -14,10 +14,15 @@ const BookDetail = ({ match }) => {
   useEffect(() => {
     const fetchBook = async () => {
       setLoading(true);
-      const bookData = await GetDetailAPI(id);
-      setBook(bookData);
-      setLoading(false); 
+      try {
+        const bookData = await GetDetailAPI(id);
+        setBook(bookData);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
     };
+  }
     fetchBook();
   }, [id]);
 
@@ -28,22 +33,31 @@ const BookDetail = ({ match }) => {
   }
 
   return (
-    <Card className='card'>
-      <Card.Img className='card_img' variant='top' src={book[0].image_s} />
-      <Card.Body>
-        <Card.Title>{book[0].title}</Card.Title>
-        <Card.Text>
-          Author: {book[0].author} <br />
-          Publisher: {book[0].publisher} <br />
-          Publication year: {book[0].publication_year} <br />
-          ISBN: {book[0].isbn} <br />
-        </Card.Text>
-        <div className='buttons'>
-          <Buttons variant='primary' label='Back' href={'/'}/>
+    <div>
+      {book ? (
+        <Card className='card'>
+          <Card.Img className='card_img' variant='top' src={book[0].image_s} />
+          <Card.Body>
+            <Card.Title>{book[0].title}</Card.Title>
+            <Card.Text>
+              Author: {book[0].author} <br />
+              Publisher: {book[0].publisher} <br />
+              Publication year: {book[0].publication_year} <br />
+              ISBN: {book[0].isbn} <br />
+            </Card.Text>
+            <div className='buttons'>
+              <Buttons variant='primary' label='Back' href={'/'}/>
+            </div>
+          </Card.Body>
+        </Card>
+      ) : (
+        <div className='bookunavailable' style={{ textAlign: 'center' }}>
+          <h1>There is no book with that ID</h1>
         </div>
-      </Card.Body>
-    </Card>
+      )}
+    </div>
   );
+  
 };
 
 export default BookDetail;
