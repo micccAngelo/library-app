@@ -48,11 +48,6 @@ function ListBook() {
       PostToCartAPI(user_id, id)
         .then(() => {
           setShowModal(true);
-          setBooks((prevBooks) =>
-            prevBooks.map((book) =>
-              book.id === id ? { ...book, loading: false } : book
-            )
-          );
           setLoading(false);
         })
         .catch((error) => {

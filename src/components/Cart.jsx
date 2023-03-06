@@ -24,8 +24,6 @@ function Cart({match}) {
   const deleteCartItem = async (user_id, book_id, item) => {
     const success = await DeleteAPI(book_id);
     if (success) {
-      const newCartItems = cartItems.filter(item => item.id !== book_id);
-      setCartItems(newCartItems);
       setShowModal(true);
       GetCartAPI().then(data => {
         setCartItems(data);
