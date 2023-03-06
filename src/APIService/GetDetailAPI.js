@@ -7,12 +7,10 @@ export const GetDetailAPI = async (id) => {
     if (data.status && data.message === 'Success') {
       return data.data;
     } else {
-      console.log("Failed to get book detail");
-      return null;
+      return Promise.resolve();
     }
   } catch (error) {
-    console.log(error);
-    return null;
+    return Promise.resolve();
   }
 };
 

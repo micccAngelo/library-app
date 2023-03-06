@@ -15,7 +15,7 @@ export const GetCartAPI = async () => {
       console.log(response.data.data);
       return response.data.data;
     } else {
-      console.log("Failed to get cart items");
+      return Promise.resolve();
     }
   } catch (error) {
     console.log(error);

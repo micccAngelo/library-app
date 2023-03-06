@@ -20,12 +20,10 @@ export const GetBooksAPI = async (currentPage) => {
       const totalPages = data.data.total_page;
       return { books: updatedBooks, totalPages };
     } else {
-      console.log("Failed to get books");
-      return { books: [], totalPages: 0 };
+      return Promise.resolve();
     }
   } catch (error) {
     console.log(error);
-    return { books: [], totalPages: 0 };
   } 
 };
 

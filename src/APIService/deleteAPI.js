@@ -11,11 +11,10 @@ export const DeleteAPI = async (book_id) => {
       console.log(data.message);
       return true;
     } else {
-      console.log(data.message || "Failed to delete book from cart");
+      return Promise.resolve();
     }
   } catch (error) {
     console.log(error);
-    console.log("Failed to delete book from cart");
   }
 };
 
