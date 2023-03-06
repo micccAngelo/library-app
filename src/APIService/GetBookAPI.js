@@ -12,7 +12,7 @@ export const GetBooksAPI = async (currentPage) => {
       }
     );
     const { data } = response;
-    if (data.status && data.code === 200) {
+    if (data.status && data.message === 'Success') {
       const updatedBooks = data.data.data_per_page.map(book => ({
         ...book,
         loading: false

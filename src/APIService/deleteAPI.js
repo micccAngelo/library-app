@@ -7,15 +7,15 @@ export const DeleteAPI = async (book_id) => {
       `/perpustakaan/api/v1/cart?user_id=${user_id}&book_id=${book_id}`
     );
     const { data } = response;
-    if (data.status && data.code === 200) {
+    if (data.status && data.message === 'Success') {
       console.log(data.message);
       return true;
     } else {
-      throw new Error(data.message || "Failed to delete book from cart");
+      console.log(data.message || "Failed to delete book from cart");
     }
   } catch (error) {
     console.log(error);
-    throw new Error("Failed to delete book from cart");
+    console.log("Failed to delete book from cart");
   }
 };
 

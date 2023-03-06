@@ -8,20 +8,17 @@ import Buttons from '../ReusableComponents/Buttons';
 
 const BookDetail = ({ match }) => {
   const [book, setBook] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
 
   useEffect(() => {
     const fetchBook = async () => {
-      setIsLoading(true);
       const bookData = await GetDetailAPI(id);
       setBook(bookData);
-      setIsLoading(false);
     };
     fetchBook();
   }, [id]);
 
-  if (isLoading) {
+  if (!book) {
     return (
       <Loadings variant="danger" />
     );
