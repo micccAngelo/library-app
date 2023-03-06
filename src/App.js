@@ -43,7 +43,7 @@ function App() {
         <Route path='/' element={<Navigate to='/book' />} />
         <Route path='/book' element={<ListBook />} />
         <Route path='/login' element={<LoginForm onLogin={handleLogin} />} />
-        <Route path='/book/:id' element={isLoggedIn ? <BookDetail /> : <Navigate to='/login' />} />
+        <Route path='/book/:id' element={<BookDetail />}/>
         <Route path='/cart' element={<Cart />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
