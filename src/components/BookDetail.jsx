@@ -51,7 +51,7 @@ const BookDetail = ({ match }) => {
           </Card.Body>
         </Card>
       ) : (
-        <div className='bookunavailable' style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
           <h1>There is no book with that ID</h1>
         </div>
       )}
