@@ -8,20 +8,20 @@ import Buttons from '../ReusableComponents/Buttons';
 
 const BookDetail = ({ match }) => {
   const [book, setBook] = useState(null);
-  const [loading, setLoading] = useState(true); // new loading state
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
   useEffect(() => {
     const fetchBook = async () => {
-      setLoading(true); // set loading to true before fetching data
+      setLoading(true);
       const bookData = await GetDetailAPI(id);
       setBook(bookData);
-      setLoading(false); // set loading to false after data is fetched
+      setLoading(false); 
     };
     fetchBook();
   }, [id]);
 
-  if (loading) { // display loading spinner if still loading
+  if (loading) { 
     return (
       <Loadings variant="danger" />
     );
